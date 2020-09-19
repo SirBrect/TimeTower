@@ -133,7 +133,7 @@ GameObject:
   m_Component:
   - component: {fileID: 214770888}
   - component: {fileID: 214770889}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Surface
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -368,7 +368,7 @@ GameObject:
   m_Component:
   - component: {fileID: 511136077}
   - component: {fileID: 511136078}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Surface
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -495,7 +495,7 @@ GameObject:
   m_Component:
   - component: {fileID: 567206231}
   - component: {fileID: 567206232}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Surface
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -539,7 +539,7 @@ GameObject:
   m_Component:
   - component: {fileID: 658010887}
   - component: {fileID: 658010888}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Surface
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -776,7 +776,7 @@ MonoBehaviour:
   speed: 75
   grounded: 0
   jumpPower: 12
-  jumpStep: 0.175
+  jumpStep: 0.3
   jumpTime: 0.25
   maxSpeed: 8
   speedUpStep: 0.15
@@ -1236,7 +1236,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1423927801}
   - component: {fileID: 1423927802}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: Surface
   m_TagString: Ground
   m_Icon: {fileID: 0}
