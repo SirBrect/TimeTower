@@ -34,6 +34,9 @@ public class CharacterMovement : MonoBehaviour
     public Animator animator;
     float direction;    // 0 is left, 1 is right
     public GameObject model;
+    public bool friction;
+    bool callJump;
+    bool callContinueJump;
     //Quaternion right;
     //Quaternion left;
 
@@ -43,6 +46,8 @@ public class CharacterMovement : MonoBehaviour
         grounded = false;
         currentSpeed = 0.0f;
         jumping = false;
+        friction = false;
+        callJump = false;
         //right = Quaternion.Euler(model.transform.forward);
         //left = Quaternion.Euler(-1*model.transform.forward);
     }
@@ -105,7 +110,8 @@ public class CharacterMovement : MonoBehaviour
         {
             if (grounded)
             {
-                Jump();
+                //Jump();
+                callJump = true;
                 Debug.Log("Pressed jump!");
             }
         }
@@ -116,7 +122,8 @@ public class CharacterMovement : MonoBehaviour
                 currentJumpTime += Time.deltaTime;
                 if (currentJumpTime < jumpTime)
                 {
-                    ContinueJump();
+                    //ContinueJump();
+                    callContinueJump = true;
                     Debug.Log("Holding jump!");
                 }
             }
@@ -135,6 +142,22 @@ public class CharacterMovement : MonoBehaviour
     private void FixedUpdate()
     {
         rb.AddForce(Vector3.down * fallingSpeed, ForceMode.VelocityChange);
+        if (callJump)
+        {
+            Jump();
+            callJump = false;
+        }
+        else if (callContinueJump)
+        {
+            ContinueJump();
+            callContinueJump = false;
+        }
+        //if (!grounded || grounded)
+        //{
+        //    Vector3 newX = rb.velocity;
+        //    newX.x = 0f;
+        //    rb.velocity = newX;
+        //}
     }
 
     //void Move(Vector3 move)
@@ -153,6 +176,18 @@ public class CharacterMovement : MonoBehaviour
     void ContinueJump()
     {
         rb.AddForce(Vector3.up * jumpStep, ForceMode.VelocityChange);
+    }
+
+    public void SetFriction(bool set, Transform myParent)
+    {
+        if (set)
+        {
+            gameObject.transform.parent = myParent;
+        }
+        else
+        {
+            gameObject.transform.parent = null;
+        }
     }
 
     public void Ground()

@@ -21,12 +21,14 @@ public class GroundCheck : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down),out hit, 0.5f, layerMask))
+        Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down), Color.red, 0.6f);
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down),out hit, 0.6f, layerMask))
         {
             if (!player.IsGrounded())
             {
                 player.Ground();
             }
+            //player.Ground();
         }
         else
         {
