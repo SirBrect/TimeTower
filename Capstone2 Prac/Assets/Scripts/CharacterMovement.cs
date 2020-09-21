@@ -141,7 +141,7 @@ public class CharacterMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        rb.AddForce(Vector3.down * fallingSpeed, ForceMode.VelocityChange);
+        //rb.AddForce(Vector3.down * fallingSpeed, ForceMode.VelocityChange);
         if (callJump)
         {
             Jump();

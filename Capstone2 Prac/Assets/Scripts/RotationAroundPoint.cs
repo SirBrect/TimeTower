@@ -14,8 +14,11 @@ public class RotationAroundPoint : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey("space")){
-            transform.RotateAround(rotPoint.transform.position, new Vector3(-1f, 0f, 0f), .5f);
+        if (Input.GetKey(KeyCode.LeftArrow)){
+            transform.RotateAround(rotPoint.transform.position, new Vector3(0f, 0f, -1f), .5f);
+        }
+        if (Input.GetKey(KeyCode.RightArrow)){
+            transform.RotateAround(rotPoint.transform.position, new Vector3(0f, 0f, 1f), .5f);
         }
     }
 }
