@@ -1138,7 +1138,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 801727345}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 2.44, z: 0}
+  m_LocalPosition: {x: 1.14, y: 2.44, z: 0}
   m_LocalScale: {x: 6.3578963, y: 0.2373, z: 6.3273873}
   m_Children:
   - {fileID: 917640766}
@@ -1232,6 +1232,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bf3e98ae32cab149ac678dc2326141f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lastPos: {x: 0, y: 0, z: 0}
   gravOffsetX: 1
   gravOffsetY: 1
   gravityVec: {x: 0, y: -0.05, z: 0}
@@ -1550,6 +1551,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bf3e98ae32cab149ac678dc2326141f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lastPos: {x: 0, y: 0, z: 0}
   gravOffsetX: 0.01
   gravOffsetY: 0.01
   gravityVec: {x: 0, y: -0.05, z: 0}
@@ -1765,6 +1767,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bf3e98ae32cab149ac678dc2326141f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lastPos: {x: 0, y: 0, z: 0}
   gravOffsetX: 1
   gravOffsetY: 1
   gravityVec: {x: 0, y: -0.05, z: 0}
@@ -2464,6 +2467,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bf3e98ae32cab149ac678dc2326141f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lastPos: {x: 0, y: 0, z: 0}
   gravOffsetX: 0.01
   gravOffsetY: 0.01
   gravityVec: {x: 0, y: -0.05, z: 0}
