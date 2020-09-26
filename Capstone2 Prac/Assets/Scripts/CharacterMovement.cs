@@ -26,6 +26,7 @@ public class CharacterMovement : MonoBehaviour
     public float maxSpeed;
     public float speedUpStep;
     public float speedDownStep;
+    public float rotateSpeed;
     [SerializeField]
     private float currentSpeed;
     float currentJumpTime;
@@ -42,6 +43,7 @@ public class CharacterMovement : MonoBehaviour
     public GameObject mesh;
     public CapsuleCollider m_Collider;
     public GameObject curGround;
+    float currentRotation;
     //Quaternion right;
     //Quaternion left;
 
@@ -53,6 +55,7 @@ public class CharacterMovement : MonoBehaviour
         jumping = false;
         friction = false;
         callJump = false;
+        currentRotation = model.transform.localEulerAngles.y;
         //right = Quaternion.Euler(model.transform.forward);
         //left = Quaternion.Euler(-1*model.transform.forward);
     }
@@ -88,17 +91,20 @@ public class CharacterMovement : MonoBehaviour
                 currentSpeed += speedUpStep;
                 currentSpeed = Mathf.Min(currentSpeed, maxSpeed);
                 direction = 1f;
-                //model.transform.rotation = Quaternion.Slerp(model.transform.rotation, right, Time.deltaTime * 5f);
-                //model.transform.forward = Vector3.Slerp(model.transform.forward, transform.right, 0.1f);
+                currentRotation += rotateSpeed;
+                currentRotation = Mathf.Min(90f, currentRotation);
+                model.transform.localEulerAngles = new Vector3(model.transform.localEulerAngles.x, currentRotation, model.transform.localEulerAngles.z);
             }
             else
             {
                 currentSpeed -= speedUpStep;
                 currentSpeed = Mathf.Max(currentSpeed, -1f * maxSpeed);
                 direction = 0f;
-                //model.transform.rotation = Quaternion.Slerp(model.transform.rotation, left, Time.deltaTime * 5f);
-                //model.transform.forward = Vector3.Slerp(model.transform.forward, -1f*transform.right, 0.1f);
+                currentRotation -= rotateSpeed;
+                currentRotation = Mathf.Max(-90f, currentRotation);
+                model.transform.localEulerAngles = new Vector3(model.transform.localEulerAngles.x, currentRotation, model.transform.localEulerAngles.z);
             }
+            Debug.Log(currentRotation);
         }
         movement = new Vector3(currentSpeed * Time.deltaTime, 0f, 0f);
         animator.SetFloat("Speed", Mathf.Abs(currentSpeed) / maxSpeed);
