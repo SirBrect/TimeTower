@@ -19,26 +19,32 @@ public class ChangeGravity : MonoBehaviour
         //Physics.gravity = new Vector3(-1f, 0f, 0f);
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            if (gravityVec.x < 20f){
-                gravityVec.x += gravOffsetX;
-            }
-            if (gravityVec.y < 20f){
-                gravityVec.y += gravOffsetY;
-            }
-            Physics.gravity = gravityVec;
+            //if (gravityVec.x < 20f){
+            //    gravityVec.x += gravOffsetX;
+            //}
+            //if (gravityVec.y < 20f){
+            //    gravityVec.y += gravOffsetY;
+            //}
+            //Physics.gravity = gravityVec;
+            transform.Rotate(0,0,0.5f);
+            //Physics.gravity = -1f * transform.up * Physics.gravity.magnitude;
             Debug.Log("Pos");
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            if (gravityVec.x > -20f){
-                gravityVec.x -= gravOffsetX;
-            }
-            if (gravityVec.y > -20f){
-                gravityVec.y -= gravOffsetY;
-            }
-            Physics.gravity = gravityVec;
+            //if (gravityVec.x > -20f){
+            //    gravityVec.x -= gravOffsetX;
+            //}
+            //if (gravityVec.y > -20f){
+            //    gravityVec.y -= gravOffsetY;
+            //}
+            //Physics.gravity = gravityVec;
+            transform.Rotate(0, 0, -0.5f);
+            //Physics.gravity = -1f * transform.up * Physics.gravity.magnitude;
             Debug.Log("Neg");
         }
+        Physics.gravity = -1f * transform.up.normalized * Physics.gravity.magnitude;
+        Debug.DrawRay(transform.position, Physics.gravity,Color.blue);
     }
 
 }

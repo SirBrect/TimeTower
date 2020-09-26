@@ -7,6 +7,7 @@ public class GroundCheck : MonoBehaviour
     public CharacterMovement player;
     int layerMask;
     RaycastHit hit;
+    public bool usingRay = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,7 +22,11 @@ public class GroundCheck : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.down), Color.red, 0.6f);
+        if (!usingRay)
+        {
+            return;
+        }
+        Debug.DrawRay(transform.position, -1*transform.parent.up, Color.red, 0.6f);
         if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down),out hit, 0.6f, layerMask))
         {
             if (!player.IsGrounded())
@@ -39,20 +44,20 @@ public class GroundCheck : MonoBehaviour
         }
     }
 
-    //private void OnTriggerStay(Collider other)
-    //{
-    //    if (other.gameObject.tag == "Ground" && !player.IsGrounded())
-    //    {
-    //        player.Ground();
-    //    }
-    //}
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.gameObject.tag == "Ground" && !player.IsGrounded())
+        {
+            player.Ground();
+        }
+    }
 
 
-    //private void OnTriggerExit(Collider other)
-    //{
-    //    if (other.gameObject.tag == "Ground")
-    //    {
-    //        player.Unground();
-    //    }
-    //}
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Ground")
+        {
+            player.Unground();
+        }
+    }
 }

@@ -37,6 +37,11 @@ public class CharacterMovement : MonoBehaviour
     public bool friction;
     bool callJump;
     bool callContinueJump;
+    public PlayerMemory memory;
+    bool dead = false;
+    public GameObject mesh;
+    public CapsuleCollider m_Collider;
+    public GameObject curGround;
     //Quaternion right;
     //Quaternion left;
 
@@ -55,6 +60,10 @@ public class CharacterMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (dead)
+        {
+            return;
+        }
         horizontal = Input.GetAxisRaw("Horizontal");
         if(Mathf.Abs(horizontal) < 0.1f)
         {
@@ -80,7 +89,7 @@ public class CharacterMovement : MonoBehaviour
                 currentSpeed = Mathf.Min(currentSpeed, maxSpeed);
                 direction = 1f;
                 //model.transform.rotation = Quaternion.Slerp(model.transform.rotation, right, Time.deltaTime * 5f);
-                model.transform.forward = Vector3.Slerp(model.transform.forward, transform.right, 0.1f);
+                //model.transform.forward = Vector3.Slerp(model.transform.forward, transform.right, 0.1f);
             }
             else
             {
@@ -88,7 +97,7 @@ public class CharacterMovement : MonoBehaviour
                 currentSpeed = Mathf.Max(currentSpeed, -1f * maxSpeed);
                 direction = 0f;
                 //model.transform.rotation = Quaternion.Slerp(model.transform.rotation, left, Time.deltaTime * 5f);
-                model.transform.forward = Vector3.Slerp(model.transform.forward, -1f*transform.right, 0.1f);
+                //model.transform.forward = Vector3.Slerp(model.transform.forward, -1f*transform.right, 0.1f);
             }
         }
         movement = new Vector3(currentSpeed * Time.deltaTime, 0f, 0f);
@@ -141,7 +150,11 @@ public class CharacterMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        //rb.AddForce(Vector3.down * fallingSpeed, ForceMode.VelocityChange);
+        if (dead)
+        {
+            return;
+        }
+        rb.AddForce(-1f * transform.up * fallingSpeed, ForceMode.VelocityChange);
         if (callJump)
         {
             Jump();
@@ -167,7 +180,7 @@ public class CharacterMovement : MonoBehaviour
 
     void Jump()
     {
-        rb.AddForce(Vector3.up * jumpPower, ForceMode.VelocityChange);
+        rb.AddForce(transform.up * jumpPower, ForceMode.VelocityChange);
         currentJumpTime = 0f;
         Debug.Log("Here!");
         jumping = true;
@@ -175,7 +188,7 @@ public class CharacterMovement : MonoBehaviour
 
     void ContinueJump()
     {
-        rb.AddForce(Vector3.up * jumpStep, ForceMode.VelocityChange);
+        rb.AddForce(transform.up * jumpStep, ForceMode.VelocityChange);
     }
 
     public void SetFriction(bool set, Transform myParent)
@@ -207,13 +220,36 @@ public class CharacterMovement : MonoBehaviour
     public void Fall()
     {
         //rb.mass = fallingMass;
-        rb.AddForce(Vector3.down * fallingSpeed, ForceMode.Acceleration);
+        rb.AddForce(-1*transform.up * fallingSpeed, ForceMode.Acceleration);
         jumping = false;
     }
 
     public bool IsGrounded()
     {
         return grounded;
+    }
+
+    public void Respawn()
+    {
+        StartCoroutine(RespawnTimer());
+    }
+
+    IEnumerator RespawnTimer()
+    {
+        dead = true;
+        mesh.SetActive(false);
+        currentSpeed = 0f;
+        m_Collider.enabled = false;
+        rb.useGravity = false;
+        rb.velocity = Vector3.zero;
+        transform.parent = null;
+        yield return new WaitForSeconds(1f);
+        transform.position = memory.GetRespawnPos();
+        mesh.SetActive(true);
+        yield return new WaitForSeconds(0.5f);
+        dead = false;
+        m_Collider.enabled = true;
+        rb.useGravity = true;
     }
 
     /*

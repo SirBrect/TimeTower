@@ -26,9 +26,10 @@ public class CamScript : MonoBehaviour
     {
         //followPos = new Vector3(player.position.x, yPos + yOffset, transform.position.z);
         //followPos = new Vector3(player.position.x, player.position.y + yOffset, transform.position.z);
-        //followPos = new Vector3(player.position.x, player.position.y + currentYOffset, transform.position.z);
-        followPos = new Vector3(player.position.x, yPos + currentYOffset, transform.position.z);
+        followPos = new Vector3(player.position.x, player.position.y + currentYOffset, transform.position.z);
+        //followPos = new Vector3(player.position.x, yPos + currentYOffset, transform.position.z);
         transform.position = Vector3.Lerp(transform.position, followPos, smooth);
+        transform.rotation = player.rotation;
         yDist = player.position.y - yPos;
         if ((yDist >= 5f && cm.IsGrounded())|| yDist < 0f)
         {
