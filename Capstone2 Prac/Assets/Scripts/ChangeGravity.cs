@@ -9,6 +9,7 @@ public class ChangeGravity : MonoBehaviour
     public float gravOffsetX = .5f;
     public float gravOffsetY = .5f;
     public Vector3 gravityVec = new Vector3 (0f, -9.8f, 0f);
+    public bool dead = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +19,7 @@ public class ChangeGravity : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(0)){
+        if (!dead && Input.GetMouseButton(0)){
             Debug.Log(Input.mousePosition);
             if (Input.mousePosition.x == lastPos.x){
                 if (left){
@@ -38,7 +39,7 @@ public class ChangeGravity : MonoBehaviour
             }
         }
         //Physics.gravity = new Vector3(-1f, 0f, 0f);
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (!dead && Input.GetKey(KeyCode.RightArrow))
         {
             //if (gravityVec.x < 20f){
             //    gravityVec.x += gravOffsetX;
@@ -51,7 +52,7 @@ public class ChangeGravity : MonoBehaviour
             //Physics.gravity = -1f * transform.up * Physics.gravity.magnitude;
             Debug.Log("Pos");
         }
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (!dead && Input.GetKey(KeyCode.LeftArrow))
         {
             //if (gravityVec.x > -20f){
             //    gravityVec.x -= gravOffsetX;
