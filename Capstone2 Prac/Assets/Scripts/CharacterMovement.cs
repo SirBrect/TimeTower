@@ -39,11 +39,13 @@ public class CharacterMovement : MonoBehaviour
     bool callJump;
     bool callContinueJump;
     public PlayerMemory memory;
+    public GameObject fadeOut;
     bool dead = false;
     public GameObject mesh;
     public CapsuleCollider m_Collider;
     public GameObject curGround;
     float currentRotation;
+    public ChangeGravity changeGrav;
     //Quaternion right;
     //Quaternion left;
 
@@ -56,6 +58,7 @@ public class CharacterMovement : MonoBehaviour
         friction = false;
         callJump = false;
         currentRotation = model.transform.localEulerAngles.y;
+        fadeOut.SetActive(false);
         //right = Quaternion.Euler(model.transform.forward);
         //left = Quaternion.Euler(-1*model.transform.forward);
     }
@@ -249,13 +252,19 @@ public class CharacterMovement : MonoBehaviour
         rb.useGravity = false;
         rb.velocity = Vector3.zero;
         transform.parent = null;
+        fadeOut.SetActive(true);
+        changeGrav.dead = true;
         yield return new WaitForSeconds(1f);
         transform.position = memory.GetRespawnPos();
+        transform.rotation = Quaternion.identity;
         mesh.SetActive(true);
-        yield return new WaitForSeconds(0.5f);
-        dead = false;
+        //yield return new WaitForSeconds(0.5f);
         m_Collider.enabled = true;
         rb.useGravity = true;
+        yield return new WaitForSeconds(0.75f);
+        dead = false;
+        fadeOut.SetActive(false);
+        changeGrav.dead = false;
     }
 
     /*
