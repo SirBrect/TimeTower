@@ -8,6 +8,7 @@ public class GroundCheck : MonoBehaviour
     int layerMask;
     RaycastHit hit;
     public bool usingRay = true;
+    public float distance = 0.6f;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,8 +27,8 @@ public class GroundCheck : MonoBehaviour
         {
             return;
         }
-        Debug.DrawRay(transform.position, -1*transform.parent.up, Color.red, 0.6f);
-        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down),out hit, 0.6f, layerMask))
+        Debug.DrawRay(transform.position, -1*transform.parent.up, Color.red, distance);
+        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.down),out hit, distance, layerMask))
         {
             if (!player.IsGrounded())
             {
