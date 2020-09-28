@@ -59,6 +59,7 @@ public class CharacterMovement : MonoBehaviour
         callJump = false;
         currentRotation = model.transform.localEulerAngles.y;
         fadeOut.SetActive(false);
+        //memory.SetRespawn(Respawn);
         //right = Quaternion.Euler(model.transform.forward);
         //left = Quaternion.Euler(-1*model.transform.forward);
     }
