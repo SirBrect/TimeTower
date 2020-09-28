@@ -1157,6 +1157,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Streetlight
       objectReference: {fileID: 0}
+    - target: {fileID: 4899486392329470165, guid: c09729ee0131a104cba557a5a2b9dc33, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 75ddb86d197963c45b908d55286a3ed4, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c09729ee0131a104cba557a5a2b9dc33, type: 3}
 --- !u!1 &380293796
@@ -1336,7 +1340,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 9626a4bb58311a44fb686e7f34dc51ab, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.262418
+      value: -4.43
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9626a4bb58311a44fb686e7f34dc51ab, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1840,6 +1844,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 143.66
       objectReference: {fileID: 0}
+    - target: {fileID: 692447249871354435, guid: 6eb8ac06e8685bb4a9e39e93a1d1e650, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5c2a61b44ab0347489e2954e4830eac7, type: 2}
     - target: {fileID: 919132149155446097, guid: 6eb8ac06e8685bb4a9e39e93a1d1e650, type: 3}
       propertyPath: m_Name
       value: Fire Hydrant (4)
@@ -1990,6 +1998,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.0139
       objectReference: {fileID: 0}
+    - target: {fileID: 4899486392329470165, guid: c09729ee0131a104cba557a5a2b9dc33, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 75ddb86d197963c45b908d55286a3ed4, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c09729ee0131a104cba557a5a2b9dc33, type: 3}
 --- !u!1001 &1024244636
@@ -2691,6 +2703,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 137.65
       objectReference: {fileID: 0}
+    - target: {fileID: 692447249871354435, guid: 6eb8ac06e8685bb4a9e39e93a1d1e650, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5c2a61b44ab0347489e2954e4830eac7, type: 2}
     - target: {fileID: 919132149155446097, guid: 6eb8ac06e8685bb4a9e39e93a1d1e650, type: 3}
       propertyPath: m_Name
       value: Fire Hydrant (1)
@@ -2937,6 +2953,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 137.65
       objectReference: {fileID: 0}
+    - target: {fileID: 692447249871354435, guid: 6eb8ac06e8685bb4a9e39e93a1d1e650, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5c2a61b44ab0347489e2954e4830eac7, type: 2}
     - target: {fileID: 919132149155446097, guid: 6eb8ac06e8685bb4a9e39e93a1d1e650, type: 3}
       propertyPath: m_Name
       value: Fire Hydrant
@@ -3075,6 +3095,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 137.65
       objectReference: {fileID: 0}
+    - target: {fileID: 692447249871354435, guid: 6eb8ac06e8685bb4a9e39e93a1d1e650, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5c2a61b44ab0347489e2954e4830eac7, type: 2}
     - target: {fileID: 919132149155446097, guid: 6eb8ac06e8685bb4a9e39e93a1d1e650, type: 3}
       propertyPath: m_Name
       value: Fire Hydrant (3)
@@ -3213,6 +3237,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 137.65
       objectReference: {fileID: 0}
+    - target: {fileID: 692447249871354435, guid: 6eb8ac06e8685bb4a9e39e93a1d1e650, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5c2a61b44ab0347489e2954e4830eac7, type: 2}
     - target: {fileID: 919132149155446097, guid: 6eb8ac06e8685bb4a9e39e93a1d1e650, type: 3}
       propertyPath: m_Name
       value: Fire Hydrant (2)
@@ -3282,6 +3310,10 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 143.66
       objectReference: {fileID: 0}
+    - target: {fileID: 692447249871354435, guid: 6eb8ac06e8685bb4a9e39e93a1d1e650, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5c2a61b44ab0347489e2954e4830eac7, type: 2}
     - target: {fileID: 919132149155446097, guid: 6eb8ac06e8685bb4a9e39e93a1d1e650, type: 3}
       propertyPath: m_Name
       value: Fire Hydrant (5)
