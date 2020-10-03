@@ -125,7 +125,7 @@ public class CharacterMovement : MonoBehaviour
         
 
         // Jump checks
-        if (Input.GetKeyDown(KeyCode.W) && grounded)
+        if ((Input.GetButton("Jump") || Input.GetButton("Fire1") || Input.GetKeyDown(KeyCode.W)) && grounded)
         {
             if (grounded)
             {

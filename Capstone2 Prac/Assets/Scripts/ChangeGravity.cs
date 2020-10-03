@@ -10,6 +10,8 @@ public class ChangeGravity : MonoBehaviour
     public float gravOffsetY = .5f;
     public Vector3 gravityVec = new Vector3 (0f, -9.8f, 0f);
     public bool dead = false;
+
+    public float gravityAxisVal;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +21,13 @@ public class ChangeGravity : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        gravityAxisVal = Input.GetAxis("GravAlt");
+        if (gravityAxisVal != 0){
+            Debug.Log(gravityAxisVal);
+            transform.Rotate(0, 0, gravityAxisVal);
+        }
+        
+        
         if (!dead && Input.GetMouseButton(0)){
             Debug.Log(Input.mousePosition);
             if (Input.mousePosition.x == lastPos.x){
