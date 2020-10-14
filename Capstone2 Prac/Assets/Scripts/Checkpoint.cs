@@ -20,4 +20,9 @@ public class Checkpoint : MonoBehaviour
     {
         
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        mem.SetRespawn(transform);
+    }
 }

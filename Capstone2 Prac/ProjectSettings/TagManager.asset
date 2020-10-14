@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - Ground
+  - DestroyCar
+  - FinishCar
   layers:
   - Default
   - TransparentFX
@@ -20,12 +22,12 @@ TagManager:
   - Feet
   - Ground
   - BadBlock
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Waterg
+  - Checkpoint
+  - MovingCar
+  - MovingCarWall
+  - SlideBlock
+  - SlideBlockProtector
   - 
   - 
   - 

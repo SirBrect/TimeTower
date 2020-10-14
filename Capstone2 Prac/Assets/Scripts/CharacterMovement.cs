@@ -46,6 +46,7 @@ public class CharacterMovement : MonoBehaviour
     public GameObject curGround;
     float currentRotation;
     public ChangeGravity changeGrav;
+    public float forceMult;
     //Quaternion right;
     //Quaternion left;
 
@@ -59,6 +60,7 @@ public class CharacterMovement : MonoBehaviour
         callJump = false;
         currentRotation = model.transform.localEulerAngles.y;
         fadeOut.SetActive(false);
+        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         //memory.SetRespawn(Respawn);
         //right = Quaternion.Euler(model.transform.forward);
         //left = Quaternion.Euler(-1*model.transform.forward);
@@ -87,6 +89,7 @@ public class CharacterMovement : MonoBehaviour
                 currentSpeed = Mathf.Min(currentSpeed, 0f);
                 direction = 0f;
             }
+            //currentSpeed = 0f;
         }
         else
         {
@@ -98,6 +101,7 @@ public class CharacterMovement : MonoBehaviour
                 currentRotation += rotateSpeed;
                 currentRotation = Mathf.Min(90f, currentRotation);
                 model.transform.localEulerAngles = new Vector3(model.transform.localEulerAngles.x, currentRotation, model.transform.localEulerAngles.z);
+                //currentSpeed = maxSpeed;
             }
             else
             {
@@ -107,6 +111,7 @@ public class CharacterMovement : MonoBehaviour
                 currentRotation -= rotateSpeed;
                 currentRotation = Mathf.Max(-90f, currentRotation);
                 model.transform.localEulerAngles = new Vector3(model.transform.localEulerAngles.x, currentRotation, model.transform.localEulerAngles.z);
+                //currentSpeed = -1 * maxSpeed;
             }
             Debug.Log(currentRotation);
         }
@@ -121,11 +126,12 @@ public class CharacterMovement : MonoBehaviour
         //{
         //    transform.Translate(movement);
         //}
+        
         transform.Translate(movement);
         
 
         // Jump checks
-        if ((Input.GetButton("Jump") || Input.GetButton("Fire1") || Input.GetKeyDown(KeyCode.W)) && grounded)
+        if ((Input.GetButtonDown("Jump") || Input.GetButton("Fire1") || Input.GetKeyDown(KeyCode.W)) && grounded)
         {
             if (grounded)
             {
@@ -134,7 +140,7 @@ public class CharacterMovement : MonoBehaviour
                 Debug.Log("Pressed jump!");
             }
         }
-        else if (Input.GetKey(KeyCode.W))
+        else if (Input.GetButton("Jump"))
         {
             if(!grounded && jumping)
             {
@@ -152,7 +158,7 @@ public class CharacterMovement : MonoBehaviour
             jumping = false;
         }
 
-        if (rb.velocity.y < 0.0f && rb.mass == 1f)
+        if (Vector3.Angle(transform.up, rb.velocity) > 95.0f && rb.mass == 1f)
         {
             Fall();
         }
@@ -175,6 +181,11 @@ public class CharacterMovement : MonoBehaviour
             ContinueJump();
             callContinueJump = false;
         }
+        rb.velocity = rb.velocity.normalized * Mathf.Min(maxSpeed, rb.velocity.magnitude);
+
+        //rb.MovePosition(rb.position + movement);
+        //rb.AddForce(transform.right * currentSpeed / forceMult, ForceMode.VelocityChange);
+
         //if (!grounded || grounded)
         //{
         //    Vector3 newX = rb.velocity;
@@ -244,19 +255,33 @@ public class CharacterMovement : MonoBehaviour
         StartCoroutine(RespawnTimer());
     }
 
-    IEnumerator RespawnTimer()
+    public void Invis()
     {
         dead = true;
         mesh.SetActive(false);
-        currentSpeed = 0f;
         m_Collider.enabled = false;
         rb.useGravity = false;
+        currentSpeed = 0f;
         rb.velocity = Vector3.zero;
+    }
+
+    public void UnInvis()
+    {
+        dead = false;
+        mesh.SetActive(true);
+        m_Collider.enabled = true;
+        rb.useGravity = true;
+    }
+
+    IEnumerator RespawnTimer()
+    {
+        Invis();
         transform.parent = null;
         fadeOut.SetActive(true);
         changeGrav.dead = true;
         yield return new WaitForSeconds(1f);
-        transform.position = memory.GetRespawnPos();
+        Vector3 respawnPos = memory.GetRespawnPos();
+        transform.position = new Vector3(respawnPos.x, respawnPos.y, transform.position.z);
         transform.rotation = Quaternion.identity;
         mesh.SetActive(true);
         //yield return new WaitForSeconds(0.5f);

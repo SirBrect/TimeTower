@@ -21,8 +21,9 @@ public class ChangeGravity : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        gravityAxisVal = Input.GetAxis("GravAlt");
-        if (gravityAxisVal != 0){
+        gravityAxisVal = Input.GetAxis("Gravity");
+        if (gravityAxisVal > 0.001f || gravityAxisVal < -0.001f)
+        {
             Debug.Log(gravityAxisVal);
             transform.Rotate(0, 0, gravityAxisVal);
         }
@@ -47,36 +48,18 @@ public class ChangeGravity : MonoBehaviour
                 left = true;
             }
         }
-        //Physics.gravity = new Vector3(-1f, 0f, 0f);
+
         if (!dead && Input.GetKey(KeyCode.RightArrow))
         {
-            //if (gravityVec.x < 20f){
-            //    gravityVec.x += gravOffsetX;
-            //}
-            //if (gravityVec.y < 20f){
-            //    gravityVec.y += gravOffsetY;
-            //}
-            //Physics.gravity = gravityVec;
-            transform.Rotate(0,0,0.5f);
-            //Physics.gravity = -1f * transform.up * Physics.gravity.magnitude;
-            Debug.Log("Pos");
+            transform.Rotate(0,0,1.0f);
         }
         if (!dead && Input.GetKey(KeyCode.LeftArrow))
         {
-            //if (gravityVec.x > -20f){
-            //    gravityVec.x -= gravOffsetX;
-            //}
-            //if (gravityVec.y > -20f){
-            //    gravityVec.y -= gravOffsetY;
-            //}
-            //Physics.gravity = gravityVec;
-            transform.Rotate(0, 0, -0.5f);
-            //Physics.gravity = -1f * transform.up * Physics.gravity.magnitude;
-            Debug.Log("Neg");
+            transform.Rotate(0, 0, -1.0f);
         }
         lastPos = Input.mousePosition;
         Physics.gravity = -1f * transform.up.normalized * Physics.gravity.magnitude;
-        Debug.DrawRay(transform.position, Physics.gravity,Color.blue);
+        //Debug.DrawRay(transform.position, Physics.gravity,Color.blue);
     }
 
 }

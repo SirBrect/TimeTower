@@ -8,6 +8,7 @@ public class RotatePlatform : MonoBehaviour
     public bool clockwise = true;
     public CharacterMovement player;
     public bool done = false;
+    public int axis = 2;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,14 +22,28 @@ public class RotatePlatform : MonoBehaviour
         {
             return;
         }
-        transform.Rotate(0f,0f,rotateSpeed);
+        // X rotation
+        if (axis == 0)
+        {
+            transform.Rotate(rotateSpeed, 0f, 0f);
+        }
+        // Y rotation
+        else if(axis == 1)
+        {
+            transform.Rotate(0f, rotateSpeed, 0f);
+        }
+        // Z rotation
+        else
+        {
+            transform.Rotate(0f, 0f, rotateSpeed);
+        }
     }
 
-    private void OnTriggerEnter(Collider collision)
+    private void OnTriggerStay(Collider collision)
     {
         if (collision.gameObject.tag == "Player")
         {
-            player.SetFriction(true, transform);
+            PlayerOn();
         }
     }
 
@@ -36,7 +51,17 @@ public class RotatePlatform : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            player.SetFriction(false, transform);
+            PlayerOff();
         }
+    }
+
+    public void PlayerOn()
+    {
+        player.SetFriction(true, transform);
+    }
+
+    public void PlayerOff()
+    {
+        player.SetFriction(false, transform);
     }
 }

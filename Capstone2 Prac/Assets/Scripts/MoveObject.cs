@@ -15,6 +15,7 @@ public class MoveObject : MonoBehaviour
     bool done = false;
     Rigidbody rb;
     public CharacterMovement player;
+    public bool slowdown = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,7 +38,14 @@ public class MoveObject : MonoBehaviour
             return;
         }
 
-        transform.Translate((targetPos - transform.position).normalized * speed * Time.deltaTime);
+        //transform.Translate((targetPos - transform.position).normalized * speed * Time.deltaTime);
+        float curSpeed = speed;
+        float distance = Vector3.Distance(transform.position, targetPos);
+        if (slowdown && distance <= 2.0f)
+        {
+            curSpeed = speed * Mathf.Max((distance - 1.0f), 0.2f);
+        }
+        transform.position = Vector3.MoveTowards(transform.position, targetPos, curSpeed * Time.deltaTime);
 
         if(Vector3.Distance(transform.position,targetPos) <= distanceMeasure)
         {
@@ -67,11 +75,11 @@ public class MoveObject : MonoBehaviour
         //Debug.Log("to: " + targetPos);
     }
 
-    private void OnTriggerEnter(Collider collision)
+    private void OnTriggerStay(Collider collision)
     {
         if(collision.gameObject.tag == "Player")
         {
-            player.SetFriction(true,transform);
+            PlayerOn();
         }
     }
 
@@ -79,7 +87,20 @@ public class MoveObject : MonoBehaviour
     {
         if (collision.gameObject.tag == "Player")
         {
-            player.SetFriction(false,transform);
+            PlayerOff();
         }
+    }
+
+    public void PlayerOn()
+    {
+        if (player.IsGrounded())
+        {
+            player.SetFriction(true, transform);
+        }
+    }
+
+    public void PlayerOff()
+    {
+        player.SetFriction(false, transform);
     }
 }

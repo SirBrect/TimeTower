@@ -31,10 +31,10 @@ public class CamScript : MonoBehaviour
         transform.position = Vector3.Lerp(transform.position, followPos, smooth);
         transform.rotation = player.rotation;
         yDist = player.position.y - yPos;
-        if ((yDist >= 5f && cm.IsGrounded())|| yDist < 0f)
-        {
-            MoveCamY();
-        }
+        //if ((yDist >= 5f && cm.IsGrounded())|| yDist < 0f)
+        //{
+        //    MoveCamY();
+        //}
         if (Input.GetKeyDown(KeyCode.S))
         {
             StartCoroutine(WaitDown());
