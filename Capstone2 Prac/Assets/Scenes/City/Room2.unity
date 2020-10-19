@@ -1644,8 +1644,8 @@ MonoBehaviour:
   jumpStep: 1.25
   jumpTime: 0.15
   maxSpeed: 15
-  speedUpStep: 0.15
-  speedDownStep: 0.1
+  speedUpStep: 3
+  speedDownStep: 3
   rotateSpeed: 4
   currentSpeed: 0
   fallingSpeed: 0.5
@@ -1658,7 +1658,7 @@ MonoBehaviour:
   m_Collider: {fileID: 2109255647}
   curGround: {fileID: 0}
   changeGrav: {fileID: 2109255646}
-  forceMult: 5
+  forceMult: 15
 --- !u!114 &2109255646
 MonoBehaviour:
   m_ObjectHideFlags: 0

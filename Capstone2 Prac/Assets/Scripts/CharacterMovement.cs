@@ -113,7 +113,7 @@ public class CharacterMovement : MonoBehaviour
                 model.transform.localEulerAngles = new Vector3(model.transform.localEulerAngles.x, currentRotation, model.transform.localEulerAngles.z);
                 //currentSpeed = -1 * maxSpeed;
             }
-            Debug.Log(currentRotation);
+            //Debug.Log(currentRotation);
         }
         movement = new Vector3(currentSpeed * Time.deltaTime, 0f, 0f);
         animator.SetFloat("Speed", Mathf.Abs(currentSpeed) / maxSpeed);
@@ -181,10 +181,24 @@ public class CharacterMovement : MonoBehaviour
             ContinueJump();
             callContinueJump = false;
         }
-        rb.velocity = rb.velocity.normalized * Mathf.Min(maxSpeed, rb.velocity.magnitude);
 
-        //rb.MovePosition(rb.position + movement);
-        //rb.AddForce(transform.right * currentSpeed / forceMult, ForceMode.VelocityChange);
+        //rb.MovePosition(rb.position + (transform.right * currentSpeed) * Time.fixedDeltaTime);
+        //rb.AddForce(transform.right * currentSpeed / forceMult, ForceMode.Impulse);
+        rb.velocity = rb.velocity.normalized * Mathf.Min(maxSpeed, rb.velocity.magnitude);
+        //Vector3 localVel = transform.InverseTransformDirection(rb.velocity);
+        //if (localVel.x > maxSpeed)
+        //{
+        //    localVel.x = maxSpeed;
+        //}
+        //if (localVel.x < -1 * maxSpeed)
+        //{
+        //    localVel.x = -1 * maxSpeed;
+        //}
+        //if (localVel.y < -1 * maxSpeed)
+        //{
+        //    localVel.y = -1 * maxSpeed;
+        //}
+        //rb.AddForce(movement / forceMult, ForceMode.VelocityChange);
 
         //if (!grounded || grounded)
         //{

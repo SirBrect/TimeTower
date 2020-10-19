@@ -47,7 +47,7 @@ public class GroundCheck : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if (other.gameObject.tag == "Ground" && !player.IsGrounded())
+        if (!usingRay && other.gameObject.tag == "Ground" && !player.IsGrounded())
         {
             player.Ground();
         }
@@ -56,7 +56,7 @@ public class GroundCheck : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.tag == "Ground")
+        if (!usingRay && other.gameObject.tag == "Ground")
         {
             player.Unground();
         }
