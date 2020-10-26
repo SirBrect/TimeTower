@@ -49,6 +49,10 @@ public class CharacterMovement : MonoBehaviour
     public float forceMult;
     //Quaternion right;
     //Quaternion left;
+    public Vector3 leftMovement;
+    public Vector3 rightMovement;
+
+    public Vector3 movementDir;
 
     // Start is called before the first frame update
     void Start()
@@ -64,6 +68,7 @@ public class CharacterMovement : MonoBehaviour
         //memory.SetRespawn(Respawn);
         //right = Quaternion.Euler(model.transform.forward);
         //left = Quaternion.Euler(-1*model.transform.forward);
+        //FindDirections();
     }
 
     // Update is called once per frame
@@ -128,6 +133,11 @@ public class CharacterMovement : MonoBehaviour
         //}
         
         transform.Translate(movement);
+        /*FindDirections();
+        horizontal = Input.GetAxisRaw("Horizontal");
+        if (horizontal != 0){
+            rb.velocity = movementDir * horizontal;
+        }*/
         
 
         // Jump checks
@@ -140,7 +150,7 @@ public class CharacterMovement : MonoBehaviour
                 Debug.Log("Pressed jump!");
             }
         }
-        else if (Input.GetButton("Jump"))
+        else if (Input.GetButton("Jump") || Input.GetButton("Fire1"))
         {
             if(!grounded && jumping)
             {
@@ -306,7 +316,11 @@ public class CharacterMovement : MonoBehaviour
         fadeOut.SetActive(false);
         changeGrav.dead = false;
     }
-
+    void FindDirections(){
+        Vector3 currentGrav = Physics.gravity;
+        movementDir = new Vector3(-currentGrav.y, currentGrav.x, 0.0f);
+        movementDir = movementDir.normalized;
+    }
     /*
     IEnumerator AccelrateBoost()
     {

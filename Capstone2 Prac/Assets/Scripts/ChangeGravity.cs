@@ -12,6 +12,8 @@ public class ChangeGravity : MonoBehaviour
     public bool dead = false;
 
     public float gravityAxisVal;
+
+    public bool triggers = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -21,11 +23,29 @@ public class ChangeGravity : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        gravityAxisVal = Input.GetAxis("Gravity");
-        if (gravityAxisVal > 0.001f || gravityAxisVal < -0.001f)
-        {
-            Debug.Log(gravityAxisVal);
-            transform.Rotate(0, 0, gravityAxisVal);
+        if (Input.GetKey("joystick button 3")){
+            if (triggers){
+                triggers = false;
+            }
+            else{
+                triggers = true;
+            }
+        }
+        if (triggers){
+            gravityAxisVal = Input.GetAxis("Gravity");
+            if (gravityAxisVal > 0.01f || gravityAxisVal < -0.01f)
+            {
+                Debug.Log(gravityAxisVal);
+                transform.Rotate(0, 0, gravityAxisVal);
+            }
+        }
+        else{
+            gravityAxisVal = Input.GetAxis("GravAlt");
+            if (gravityAxisVal > 0.01f || gravityAxisVal < -0.01f)
+            {
+                Debug.Log(gravityAxisVal);
+                transform.Rotate(0, 0, gravityAxisVal);
+            }
         }
         
         
