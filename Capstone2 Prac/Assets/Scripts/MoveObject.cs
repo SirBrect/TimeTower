@@ -16,6 +16,7 @@ public class MoveObject : MonoBehaviour
     Rigidbody rb;
     public CharacterMovement player;
     public bool slowdown = false;
+    public int startingVal = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,8 +26,8 @@ public class MoveObject : MonoBehaviour
         {
             pos.Add(form.position);
         }
-        currentIndex = 0;
-        targetPos = pos[0];
+        currentIndex = startingVal;
+        targetPos = pos[currentIndex];
         startTime = 0.0f;
     }
 
@@ -54,7 +55,7 @@ public class MoveObject : MonoBehaviour
         }
     }
 
-    void ChangeTarget()
+    public void ChangeTarget()
     {
         currentIndex++;
         if (currentIndex >= pos.Count)

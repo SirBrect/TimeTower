@@ -16,6 +16,7 @@ public class CarMove : MonoBehaviour
     public float speed;
     Vector3 movement;
     Quaternion originRot;
+    float gravityAxisVal;
 
     // Start is called before the first frame update
     void Start()
@@ -31,7 +32,7 @@ public class CarMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (ready && Input.GetButtonDown("SquareX") && !begin)
+        if (ready && (Input.GetButtonDown("SquareX") || Input.GetButtonDown("Interact")) && !begin)
         {
             Begin();
         }
@@ -39,6 +40,8 @@ public class CarMove : MonoBehaviour
         {
             movement = new Vector3(speed * Time.deltaTime, 0f, 0f);
             transform.Translate(movement);
+            gravityAxisVal = Input.GetAxis("Gravity");
+            /*
             if (Input.GetKey(KeyCode.RightArrow))
             {
                 transform.Rotate(0, 0, 1.0f);
@@ -47,6 +50,8 @@ public class CarMove : MonoBehaviour
             {
                 transform.Rotate(0, 0, -1.0f);
             }
+            */
+            transform.Rotate(0, 0, gravityAxisVal);
             player.transform.position = transform.position;
         }
     }

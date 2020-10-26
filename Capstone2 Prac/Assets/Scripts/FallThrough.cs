@@ -16,7 +16,7 @@ public class FallThrough : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isTouching && Input.GetKeyDown(KeyCode.E))
+        if(isTouching && Input.GetAxisRaw("Vertical")<0.0f && (Input.GetKeyDown(KeyCode.E) || Input.GetButtonDown("Interact")))
         {
             StartCoroutine(Fall());
         }
