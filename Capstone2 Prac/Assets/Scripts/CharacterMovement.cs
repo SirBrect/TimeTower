@@ -315,6 +315,7 @@ public class CharacterMovement : MonoBehaviour
         dead = false;
         fadeOut.SetActive(false);
         changeGrav.dead = false;
+        transform.parent = null;
     }
     void FindDirections(){
         Vector3 currentGrav = Physics.gravity;

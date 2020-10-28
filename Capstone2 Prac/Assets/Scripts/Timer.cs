@@ -16,6 +16,10 @@ public class Timer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKey(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
         timer += Time.deltaTime;
         text.text = timer.ToString("F2");
     }

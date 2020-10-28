@@ -23,7 +23,7 @@ public class End : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         endscreen.SetActive(true);
-        text.text = "Nice Work!\nTime: " + timer.GetTime().ToString();
+        text.text = "Nice Work!\nTime: " + timer.GetTime().ToString("F2");
         Time.timeScale = 0.0f;
     }
 }

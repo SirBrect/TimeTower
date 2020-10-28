@@ -28,7 +28,7 @@ TagManager:
   - MovingCarWall
   - SlideBlock
   - SlideBlockProtector
-  - 
+  - PlayerTrigger
   - 
   - 
   - 
