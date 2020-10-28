@@ -32,7 +32,7 @@ public class CharacterMovement : MonoBehaviour
     float currentJumpTime;
     bool jumping;
     public float fallingSpeed = 2f;
-    public Animator animator;
+    //public Animator animator;
     float direction;    // 0 is left, 1 is right
     public GameObject model;
     public bool friction;
@@ -49,10 +49,10 @@ public class CharacterMovement : MonoBehaviour
     public float forceMult;
     //Quaternion right;
     //Quaternion left;
-    public Vector3 leftMovement;
-    public Vector3 rightMovement;
 
     public Vector3 movementDir;
+
+    public bool stop = false;
 
     // Start is called before the first frame update
     void Start()
@@ -79,7 +79,14 @@ public class CharacterMovement : MonoBehaviour
             return;
         }
         horizontal = Input.GetAxisRaw("Horizontal");
-        if(Mathf.Abs(horizontal) < 0.1f)
+        if (horizontal < .01 && horizontal > -.01 && stop){
+            
+        }
+        else{
+            rb.AddForce(transform.right * horizontal * 50, ForceMode.Force);
+            stop = true;
+        }
+        /*if(Mathf.Abs(horizontal) < 0.1f)
         {
             if(currentSpeed > 0f)
             {
@@ -251,7 +258,7 @@ public class CharacterMovement : MonoBehaviour
     public void Ground()
     {
         grounded = true;
-        animator.SetBool("Grounded", true);
+        //animator.SetBool("Grounded", true);
         jumping = false;
         //rb.mass = 1f;
     }
@@ -259,7 +266,7 @@ public class CharacterMovement : MonoBehaviour
     public void Unground()
     {
         grounded = false;
-        animator.SetBool("Grounded", false);
+        //animator.SetBool("Grounded", false);
     }
 
     public void Fall()
