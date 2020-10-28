@@ -32,7 +32,7 @@ public class CharacterMovement : MonoBehaviour
     float currentJumpTime;
     bool jumping;
     public float fallingSpeed = 2f;
-    //public Animator animator;
+    public Animator animator;
     float direction;    // 0 is left, 1 is right
     public GameObject model;
     public bool friction;
@@ -83,9 +83,14 @@ public class CharacterMovement : MonoBehaviour
             
         }
         else{
-            rb.AddForce(transform.right * horizontal * 50, ForceMode.Force);
-            stop = true;
+            if(Vector3.Cross(rb.velocity, transform.up).magnitude < maxSpeed)
+            {
+                rb.AddForce(transform.right * horizontal * speed, ForceMode.Force);
+                stop = true;
+            }
         }
+        animator.SetFloat("Speed", horizontal);
+        animator.SetFloat("Direction", horizontal);
         /*if(Mathf.Abs(horizontal) < 0.1f)
         {
             if(currentSpeed > 0f)
@@ -145,7 +150,7 @@ public class CharacterMovement : MonoBehaviour
         if (horizontal != 0){
             rb.velocity = movementDir * horizontal;
         }*/
-        
+
 
         // Jump checks
         if ((Input.GetButtonDown("Jump") || Input.GetButton("Fire1") || Input.GetKeyDown(KeyCode.W)) && grounded)
@@ -199,9 +204,12 @@ public class CharacterMovement : MonoBehaviour
             callContinueJump = false;
         }
 
+        Debug.DrawRay(transform.position, Vector3.Cross(rb.velocity, transform.up),Color.red);
+
+        //rb.velocity = rb.velocity.normalized * Mathf.Min(maxSpeed, rb.velocity.magnitude);
+
         //rb.MovePosition(rb.position + (transform.right * currentSpeed) * Time.fixedDeltaTime);
         //rb.AddForce(transform.right * currentSpeed / forceMult, ForceMode.Impulse);
-        rb.velocity = rb.velocity.normalized * Mathf.Min(maxSpeed, rb.velocity.magnitude);
         //Vector3 localVel = transform.InverseTransformDirection(rb.velocity);
         //if (localVel.x > maxSpeed)
         //{
@@ -232,7 +240,7 @@ public class CharacterMovement : MonoBehaviour
 
     void Jump()
     {
-        rb.AddForce(transform.up * jumpPower, ForceMode.VelocityChange);
+        rb.AddForce(transform.up * jumpPower, ForceMode.Force);
         currentJumpTime = 0f;
         Debug.Log("Here!");
         jumping = true;
@@ -240,7 +248,7 @@ public class CharacterMovement : MonoBehaviour
 
     void ContinueJump()
     {
-        rb.AddForce(transform.up * jumpStep, ForceMode.VelocityChange);
+        rb.AddForce(transform.up * jumpStep, ForceMode.Force);
     }
 
     public void SetFriction(bool set, Transform myParent)
@@ -258,7 +266,7 @@ public class CharacterMovement : MonoBehaviour
     public void Ground()
     {
         grounded = true;
-        //animator.SetBool("Grounded", true);
+        animator.SetBool("Grounded", true);
         jumping = false;
         //rb.mass = 1f;
     }
@@ -266,7 +274,7 @@ public class CharacterMovement : MonoBehaviour
     public void Unground()
     {
         grounded = false;
-        //animator.SetBool("Grounded", false);
+        animator.SetBool("Grounded", false);
     }
 
     public void Fall()

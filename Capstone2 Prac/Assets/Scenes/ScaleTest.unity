@@ -26138,12 +26138,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   usingForces: 0
   rb: {fileID: 1021811491}
-  speed: 75
-  grounded: 0
-  jumpPower: 12
-  jumpStep: 1.25
-  jumpTime: 0.15
-  maxSpeed: 15
+  speed: 50
+  grounded: 1
+  jumpPower: 650
+  jumpStep: 62.5
+  jumpTime: 0.2
+  maxSpeed: 10
   speedUpStep: 0.15
   speedDownStep: 0.1
   rotateSpeed: 4
@@ -26159,9 +26159,8 @@ MonoBehaviour:
   curGround: {fileID: 0}
   changeGrav: {fileID: 1021811490}
   forceMult: 5
-  leftMovement: {x: 0, y: 0, z: 0}
-  rightMovement: {x: 0, y: 0, z: 0}
   movementDir: {x: 0, y: 0, z: 0}
+  stop: 1
 --- !u!136 &1021811493
 CapsuleCollider:
   m_ObjectHideFlags: 0
