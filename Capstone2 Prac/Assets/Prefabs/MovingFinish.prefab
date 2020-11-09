@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6107550228971428506}
   - component: {fileID: 7200488561052942691}
   - component: {fileID: 8035840336163462793}
-  m_Layer: 17
+  m_Layer: 21
   m_Name: MovingFinish
   m_TagString: FinishCar
   m_Icon: {fileID: 0}

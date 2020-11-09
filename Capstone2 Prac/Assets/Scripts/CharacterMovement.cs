@@ -23,7 +23,9 @@ public class CharacterMovement : MonoBehaviour
     public float jumpPower;
     public float jumpStep;
     public float jumpTime;
-    public float maxSpeed;
+    private float maxSpeed;
+    public float maxGroundSpeed;
+    public float maxAirSpeed;
     public float speedUpStep;
     public float speedDownStep;
     public float rotateSpeed;
@@ -47,6 +49,9 @@ public class CharacterMovement : MonoBehaviour
     float currentRotation;
     public ChangeGravity changeGrav;
     public float forceMult;
+    [SerializeField]
+    private bool debugInvincible = false;
+    bool joystickMovement = true;
     //Quaternion right;
     //Quaternion left;
 
@@ -65,6 +70,7 @@ public class CharacterMovement : MonoBehaviour
         currentRotation = model.transform.localEulerAngles.y;
         fadeOut.SetActive(false);
         rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+        maxSpeed = maxGroundSpeed;
         //memory.SetRespawn(Respawn);
         //right = Quaternion.Euler(model.transform.forward);
         //left = Quaternion.Euler(-1*model.transform.forward);
@@ -78,7 +84,23 @@ public class CharacterMovement : MonoBehaviour
         {
             return;
         }
-        horizontal = Input.GetAxisRaw("Horizontal");
+        if (grounded)
+        {
+            maxSpeed = maxGroundSpeed;
+        }
+        else
+        {
+            maxSpeed = maxAirSpeed;
+        }
+        if (joystickMovement)
+        {
+            horizontal = Input.GetAxisRaw("Horizontal");
+        }
+        else
+        {
+            horizontal = Input.GetAxisRaw("HorizontalAlt");
+        }
+        
         if (horizontal < .01 && horizontal > -.01 && stop){
             
         }
@@ -89,8 +111,15 @@ public class CharacterMovement : MonoBehaviour
                 stop = true;
             }
         }
-        animator.SetFloat("Speed", horizontal);
-        animator.SetFloat("Direction", horizontal);
+        animator.SetFloat("Speed", Mathf.Abs(horizontal));
+        if (horizontal > 0.0f)
+        {
+            animator.SetFloat("Direction", 1.0f);
+        }
+        else if(horizontal< 0.0f)
+        {
+            animator.SetFloat("Direction", -1.0f);
+        }
         /*if(Mathf.Abs(horizontal) < 0.1f)
         {
             if(currentSpeed > 0f)
@@ -184,6 +213,36 @@ public class CharacterMovement : MonoBehaviour
         {
             Fall();
         }
+
+        if (Input.GetButtonDown("ButtonB"))
+        {
+            if (!debugInvincible)
+            {
+                debugInvincible = true;
+                rb.useGravity = false;
+                rb.detectCollisions = false;
+            }
+            else
+            {
+                debugInvincible = false;
+                rb.useGravity = true;
+                rb.detectCollisions = true;
+            }
+        }
+
+        if (Input.GetButtonDown("Start"))
+        {
+            if (joystickMovement)
+            {
+                joystickMovement = false;
+            }
+            else
+            {
+                joystickMovement = true;
+            }
+        }
+
+
     }
 
     private void FixedUpdate()
@@ -192,7 +251,13 @@ public class CharacterMovement : MonoBehaviour
         {
             return;
         }
-        rb.AddForce(-1f * transform.up * fallingSpeed, ForceMode.VelocityChange);
+        if (!debugInvincible)
+        {
+            if (Vector3.Cross(rb.velocity, transform.right).magnitude < maxSpeed || jumping)
+            {
+                rb.AddForce(-1f * transform.up * fallingSpeed, ForceMode.VelocityChange);
+            }
+        }
         if (callJump)
         {
             Jump();
@@ -204,7 +269,8 @@ public class CharacterMovement : MonoBehaviour
             callContinueJump = false;
         }
 
-        Debug.DrawRay(transform.position, Vector3.Cross(rb.velocity, transform.up),Color.red);
+        //Debug.DrawRay(transform.position, Vector3.Cross(rb.velocity, transform.up),Color.red);
+        Debug.DrawRay(transform.position, Vector3.Cross(rb.velocity, transform.right),Color.red);
 
         //rb.velocity = rb.velocity.normalized * Mathf.Min(maxSpeed, rb.velocity.magnitude);
 
@@ -280,7 +346,13 @@ public class CharacterMovement : MonoBehaviour
     public void Fall()
     {
         //rb.mass = fallingMass;
-        rb.AddForce(-1*transform.up * fallingSpeed, ForceMode.Acceleration);
+        if (!debugInvincible)
+        {
+            if (Vector3.Cross(rb.velocity, transform.right).magnitude < maxSpeed)
+            {
+                rb.AddForce(-1 * transform.up * fallingSpeed, ForceMode.Acceleration);
+            }
+        }
         jumping = false;
     }
 
