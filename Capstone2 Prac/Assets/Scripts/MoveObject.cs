@@ -17,10 +17,14 @@ public class MoveObject : MonoBehaviour
     public CharacterMovement player;
     public bool slowdown = false;
     public int startingVal = 0;
+    public bool usingRigid = false;
     // Start is called before the first frame update
     void Start()
     {
-        rb = gameObject.GetComponent<Rigidbody>();
+        if (usingRigid)
+        {
+            rb = gameObject.GetComponent<Rigidbody>();
+        }
         pos = new List<Vector3>();
         foreach (Transform form in trans)
         {
@@ -46,13 +50,30 @@ public class MoveObject : MonoBehaviour
         {
             curSpeed = speed * Mathf.Max((distance - 1.0f), 0.2f);
         }
-        transform.position = Vector3.MoveTowards(transform.position, targetPos, curSpeed * Time.deltaTime);
+        if (!usingRigid)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, curSpeed * Time.deltaTime);
+        }
 
         if(Vector3.Distance(transform.position,targetPos) <= distanceMeasure)
         {
             //Debug.Log("Made it!");
             ChangeTarget();
         }
+    }
+
+    private void FixedUpdate()
+    {
+        if (done)
+        {
+            return;
+        }
+        if (usingRigid)
+        {
+            Vector3 direction = targetPos - transform.position;
+            rb.AddRelativeForce(direction.normalized * speed, ForceMode.Force);
+        }
+        
     }
 
     public void ChangeTarget()

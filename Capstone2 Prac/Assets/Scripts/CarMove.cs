@@ -6,6 +6,8 @@ public class CarMove : MonoBehaviour
 {
     [SerializeField]
     private bool ready;
+    [SerializeField]
+    private bool set;
 
     bool begin;
     Vector3 origin;
@@ -17,29 +19,52 @@ public class CarMove : MonoBehaviour
     Vector3 movement;
     Quaternion originRot;
     float gravityAxisVal;
+    bool pause;
 
     // Start is called before the first frame update
     void Start()
     {
         ready = false;
+        set = false;
         begin = false;
         origin = transform.position;
         originRot = transform.rotation;
         //beginBox = GetComponent<BoxCollider>();
         player = character.gameObject;
+        pause = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (ready && (Input.GetButtonDown("SquareX") || Input.GetButtonDown("Interact")) && !begin)
+        if (ready && (Input.GetButtonDown("SquareX") || Input.GetButtonDown("Interact")) && !begin && !set)
+        {
+            Set();
+            return;
+        }
+        else if (set && (Input.GetButtonDown("SquareX") || Input.GetButtonDown("Interact")) && !begin && !ready)
         {
             Begin();
+            return;
         }
         if (begin)
         {
-            movement = new Vector3(speed * Time.deltaTime, 0f, 0f);
-            transform.Translate(movement);
+            if (Input.GetButtonDown("SquareX") || Input.GetButtonDown("Interact"))
+            {
+                if (pause)
+                {
+                    pause = false;
+                }
+                else
+                {
+                    pause = true;
+                }
+            }
+            if (!pause)
+            {
+                movement = new Vector3(speed * Time.deltaTime, 0f, 0f);
+                transform.Translate(movement);
+            }
             gravityAxisVal = Input.GetAxis("Gravity");
             /*
             if (Input.GetKey(KeyCode.RightArrow))
@@ -87,20 +112,31 @@ public class CarMove : MonoBehaviour
     {
         //beginBox.enabled = false;
         ready = false;
+        set = false;
         begin = true;
+        pause = false;
         //player.transform.parent = transform;
+    }
+
+    void Set()
+    {
+        ready = false;
+        begin = false;
+        set = true;
         character.Invis();
     }
 
     IEnumerator DestroyCar()
     {
         begin = false;
-        mr.enabled = false;
+        //mr.enabled = false;
+        character.UnInvis();
         transform.position = origin;
         transform.rotation = originRot;
-        character.Respawn();
+        pause = false;
+        //character.Respawn();
         yield return new WaitForSeconds(0.5f);
-        mr.enabled = true;
+        //mr.enabled = true;
         //beginBox.enabled = true;
     }
 

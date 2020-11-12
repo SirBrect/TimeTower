@@ -101,16 +101,16 @@ public class CharacterMovement : MonoBehaviour
             horizontal = Input.GetAxisRaw("HorizontalAlt");
         }
         
-        if (horizontal < .01 && horizontal > -.01 && stop){
+        //if (horizontal < .01 && horizontal > -.01 && stop){
             
-        }
-        else{
-            if(Vector3.Cross(rb.velocity, transform.up).magnitude < maxSpeed)
-            {
-                rb.AddForce(transform.right * horizontal * speed, ForceMode.Force);
-                stop = true;
-            }
-        }
+        //}
+        //else{
+        //    if(Vector3.Cross(rb.velocity, transform.up).magnitude < maxSpeed)
+        //    {
+        //        rb.AddForce(transform.right * horizontal * speed, ForceMode.Force);
+        //        stop = true;
+        //    }
+        //}
         animator.SetFloat("Speed", Mathf.Abs(horizontal));
         if (horizontal > 0.0f)
         {
@@ -219,13 +219,13 @@ public class CharacterMovement : MonoBehaviour
             if (!debugInvincible)
             {
                 debugInvincible = true;
-                rb.useGravity = false;
+                //rb.useGravity = false;
                 rb.detectCollisions = false;
             }
             else
             {
                 debugInvincible = false;
-                rb.useGravity = true;
+                //rb.useGravity = true;
                 rb.detectCollisions = true;
             }
         }
@@ -256,6 +256,18 @@ public class CharacterMovement : MonoBehaviour
             if (Vector3.Cross(rb.velocity, transform.right).magnitude < maxSpeed || jumping)
             {
                 rb.AddForce(-1f * transform.up * fallingSpeed, ForceMode.VelocityChange);
+            }
+        }
+        if (horizontal < .01 && horizontal > -.01 && stop)
+        {
+
+        }
+        else
+        {
+            if (Vector3.Cross(rb.velocity, transform.up).magnitude < maxSpeed)
+            {
+                rb.AddForce(transform.right * horizontal * speed, ForceMode.Force);
+                stop = true;
             }
         }
         if (callJump)
@@ -371,7 +383,7 @@ public class CharacterMovement : MonoBehaviour
         dead = true;
         mesh.SetActive(false);
         m_Collider.enabled = false;
-        rb.useGravity = false;
+        //rb.useGravity = false;
         currentSpeed = 0f;
         rb.velocity = Vector3.zero;
     }
@@ -381,7 +393,7 @@ public class CharacterMovement : MonoBehaviour
         dead = false;
         mesh.SetActive(true);
         m_Collider.enabled = true;
-        rb.useGravity = true;
+        //rb.useGravity = true;
     }
 
     IEnumerator RespawnTimer()
@@ -397,7 +409,7 @@ public class CharacterMovement : MonoBehaviour
         mesh.SetActive(true);
         //yield return new WaitForSeconds(0.5f);
         m_Collider.enabled = true;
-        rb.useGravity = true;
+        //rb.useGravity = true;
         yield return new WaitForSeconds(0.75f);
         dead = false;
         fadeOut.SetActive(false);
