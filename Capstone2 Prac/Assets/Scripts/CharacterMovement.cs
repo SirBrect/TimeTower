@@ -51,7 +51,7 @@ public class CharacterMovement : MonoBehaviour
     public float forceMult;
     [SerializeField]
     private bool debugInvincible = false;
-    bool joystickMovement = true;
+    //bool joystickMovement = true;
     //Quaternion right;
     //Quaternion left;
 
@@ -92,13 +92,15 @@ public class CharacterMovement : MonoBehaviour
         {
             maxSpeed = maxAirSpeed;
         }
-        if (joystickMovement)
+        float horizontalStick = Input.GetAxisRaw("Horizontal");
+        float horizontalPad = Input.GetAxisRaw("HorizontalAlt");
+        if(Mathf.Abs(horizontalStick) >= Mathf.Abs(horizontalPad))
         {
-            horizontal = Input.GetAxisRaw("Horizontal");
+            horizontal = horizontalStick;
         }
         else
         {
-            horizontal = Input.GetAxisRaw("HorizontalAlt");
+            horizontal = horizontalPad;
         }
         
         //if (horizontal < .01 && horizontal > -.01 && stop){
@@ -230,17 +232,17 @@ public class CharacterMovement : MonoBehaviour
             }
         }
 
-        if (Input.GetButtonDown("Start"))
-        {
-            if (joystickMovement)
-            {
-                joystickMovement = false;
-            }
-            else
-            {
-                joystickMovement = true;
-            }
-        }
+        //if (Input.GetButtonDown("Start"))
+        //{
+        //    if (joystickMovement)
+        //    {
+        //        joystickMovement = false;
+        //    }
+        //    else
+        //    {
+        //        joystickMovement = true;
+        //    }
+        //}
 
 
     }

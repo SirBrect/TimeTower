@@ -12,8 +12,9 @@ public class ChangeGravity : MonoBehaviour
     public bool dead = false;
 
     public float gravityAxisVal;
+    public float gravityAxisValSlow;
 
-    public bool triggers = false;
+    public bool triggers = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,20 +24,32 @@ public class ChangeGravity : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKey("joystick button 3")){
-            if (triggers){
-                triggers = false;
-            }
-            else{
-                triggers = true;
-            }
-        }
+        //if (Input.GetKey("joystick button 3")){
+        //    if (triggers){
+        //        triggers = false;
+        //    }
+        //    else{
+        //        triggers = true;
+        //    }
+        //}
         if (triggers){
             gravityAxisVal = Input.GetAxis("Gravity");
-            if (gravityAxisVal > 0.01f || gravityAxisVal < -0.01f)
+            gravityAxisValSlow = Input.GetAxis("GravitySlow");
+            if(Mathf.Abs(gravityAxisVal) >= Mathf.Abs(gravityAxisValSlow))
             {
-                Debug.Log(gravityAxisVal);
-                transform.Rotate(0, 0, gravityAxisVal);
+                if (gravityAxisVal > 0.01f || gravityAxisVal < -0.01f)
+                {
+                    Debug.Log(gravityAxisVal);
+                    transform.Rotate(0, 0, gravityAxisVal);
+                }
+            }
+            else
+            {
+                if (gravityAxisValSlow > 0.01f || gravityAxisValSlow < -0.01f)
+                {
+                    Debug.Log(gravityAxisValSlow);
+                    transform.Rotate(0, 0, gravityAxisValSlow/2.0f);
+                }
             }
         }
         else{
@@ -71,7 +84,7 @@ public class ChangeGravity : MonoBehaviour
 
         if (!dead && Input.GetKey(KeyCode.RightArrow))
         {
-            transform.Rotate(0,0,1.0f);
+            transform.Rotate(0, 0, 1.0f);
         }
         if (!dead && Input.GetKey(KeyCode.LeftArrow))
         {

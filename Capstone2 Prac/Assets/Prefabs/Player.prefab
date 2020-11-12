@@ -77,6 +77,7 @@ MonoBehaviour:
   gravityVec: {x: 0, y: -0.05, z: 0}
   dead: 0
   gravityAxisVal: 0
+  gravityAxisValSlow: 0
   triggers: 0
 --- !u!1 &3703116589571543866
 GameObject:
@@ -254,7 +255,8 @@ MonoBehaviour:
   gravityVec: {x: 0, y: -0.05, z: 0}
   dead: 0
   gravityAxisVal: 0
-  triggers: 0
+  gravityAxisValSlow: 0
+  triggers: 1
 --- !u!1 &3703116589987026031
 GameObject:
   m_ObjectHideFlags: 0
@@ -334,6 +336,7 @@ MonoBehaviour:
   gravityVec: {x: 0, y: -0.05, z: 0}
   dead: 0
   gravityAxisVal: 0
+  gravityAxisValSlow: 0
   triggers: 0
 --- !u!114 &3703116590639040571
 MonoBehaviour:
@@ -353,6 +356,7 @@ MonoBehaviour:
   gravityVec: {x: 0, y: -0.05, z: 0}
   dead: 0
   gravityAxisVal: 0
+  gravityAxisValSlow: 0
   triggers: 0
 --- !u!95 &3703116591198024310
 Animator:

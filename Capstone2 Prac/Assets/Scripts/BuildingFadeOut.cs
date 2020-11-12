@@ -7,6 +7,7 @@ public class BuildingFadeOut : MonoBehaviour
     public List<MeshRenderer> mr;
     public List<BoxCollider> on;
     public List<BoxCollider> off;
+    public List<GameObject> portals;
     bool buildingOn;
     // Start is called before the first frame update
     void Start()
@@ -23,6 +24,10 @@ public class BuildingFadeOut : MonoBehaviour
         foreach (MeshRenderer mesh in mr)
         {
             mesh.enabled = true;
+        }
+        foreach(GameObject portal in portals)
+        {
+            portal.SetActive(true);
         }
     }
 
@@ -73,6 +78,10 @@ public class BuildingFadeOut : MonoBehaviour
             {
                 box.enabled = true;
             }
+            foreach (GameObject portal in portals)
+            {
+                portal.SetActive(false);
+            }
         }
         else
         {
@@ -89,6 +98,10 @@ public class BuildingFadeOut : MonoBehaviour
             foreach (BoxCollider box in on)
             {
                 box.enabled = true;
+            }
+            foreach (GameObject portal in portals)
+            {
+                portal.SetActive(true);
             }
         }
     }

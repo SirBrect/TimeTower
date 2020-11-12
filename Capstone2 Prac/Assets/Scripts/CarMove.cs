@@ -65,7 +65,16 @@ public class CarMove : MonoBehaviour
                 movement = new Vector3(speed * Time.deltaTime, 0f, 0f);
                 transform.Translate(movement);
             }
-            gravityAxisVal = Input.GetAxis("Gravity");
+            float gravityTrig = Input.GetAxis("Gravity");
+            float gravityBump = Input.GetAxis("GravitySlow");
+            if (Mathf.Abs(gravityTrig) >= Mathf.Abs(gravityBump))
+            {
+                gravityAxisVal = gravityTrig;
+            }
+            else
+            {
+                gravityAxisVal = gravityBump;
+            }
             /*
             if (Input.GetKey(KeyCode.RightArrow))
             {
