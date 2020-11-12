@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BuildingFadeOut : MonoBehaviour
 {
-    public MeshRenderer mr;
+    public List<MeshRenderer> mr;
     public List<BoxCollider> on;
     public List<BoxCollider> off;
     bool buildingOn;
@@ -20,12 +20,33 @@ public class BuildingFadeOut : MonoBehaviour
         {
             box.enabled = true;
         }
+        foreach (MeshRenderer mesh in mr)
+        {
+            mesh.enabled = true;
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //if(buildingOn && mr[0].material.color.a < 1.0f)
+        //{
+        //    foreach(MeshRenderer mesh in mr)
+        //    {
+        //        Color newColor = mesh.material.color;
+        //        newColor.a -= Time.deltaTime;
+        //        mesh.material.color = newColor;
+        //    }
+        //}
+        //else if(!buildingOn && mr[0].material.color.a > 0.0f)
+        //{
+        //    foreach (MeshRenderer mesh in mr)
+        //    {
+        //        Color newColor = mesh.material.color;
+        //        newColor.a += Time.deltaTime;
+        //        mesh.material.color = newColor;
+        //    }
+        //}
     }
 
     private void OnTriggerEnter(Collider other)
@@ -39,7 +60,11 @@ public class BuildingFadeOut : MonoBehaviour
         if (buildingOn)
         {
             buildingOn = false;
-            mr.enabled = false;
+            foreach (MeshRenderer mesh in mr)
+            {
+                mesh.enabled = false;
+            }
+            //mr.enabled = false;
             foreach (BoxCollider box in on)
             {
                 box.enabled = false;
@@ -52,7 +77,11 @@ public class BuildingFadeOut : MonoBehaviour
         else
         {
             buildingOn = true;
-            mr.enabled = true;
+            foreach (MeshRenderer mesh in mr)
+            {
+                mesh.enabled = true;
+            }
+            //mr.enabled = true;
             foreach (BoxCollider box in off)
             {
                 box.enabled = false;
