@@ -51,9 +51,7 @@ public class CharacterMovement : MonoBehaviour
     public float forceMult;
     [SerializeField]
     private bool debugInvincible = false;
-    //bool joystickMovement = true;
-    //Quaternion right;
-    //Quaternion left;
+    bool stopMidair = false;
 
     public Vector3 movementDir;
 
@@ -122,65 +120,6 @@ public class CharacterMovement : MonoBehaviour
         {
             animator.SetFloat("Direction", -1.0f);
         }
-        /*if(Mathf.Abs(horizontal) < 0.1f)
-        {
-            if(currentSpeed > 0f)
-            {
-                currentSpeed -= speedDownStep;
-                currentSpeed = Mathf.Max(currentSpeed, 0f);
-                direction = 1f;
-                
-            }
-            else if(currentSpeed < 0f)
-            {
-                currentSpeed += speedDownStep;
-                currentSpeed = Mathf.Min(currentSpeed, 0f);
-                direction = 0f;
-            }
-            //currentSpeed = 0f;
-        }
-        else
-        {
-            if(horizontal > 0f)
-            {
-                currentSpeed += speedUpStep;
-                currentSpeed = Mathf.Min(currentSpeed, maxSpeed);
-                direction = 1f;
-                currentRotation += rotateSpeed;
-                currentRotation = Mathf.Min(90f, currentRotation);
-                model.transform.localEulerAngles = new Vector3(model.transform.localEulerAngles.x, currentRotation, model.transform.localEulerAngles.z);
-                //currentSpeed = maxSpeed;
-            }
-            else
-            {
-                currentSpeed -= speedUpStep;
-                currentSpeed = Mathf.Max(currentSpeed, -1f * maxSpeed);
-                direction = 0f;
-                currentRotation -= rotateSpeed;
-                currentRotation = Mathf.Max(-90f, currentRotation);
-                model.transform.localEulerAngles = new Vector3(model.transform.localEulerAngles.x, currentRotation, model.transform.localEulerAngles.z);
-                //currentSpeed = -1 * maxSpeed;
-            }
-            //Debug.Log(currentRotation);
-        }
-        movement = new Vector3(currentSpeed * Time.deltaTime, 0f, 0f);
-        animator.SetFloat("Speed", Mathf.Abs(currentSpeed) / maxSpeed);
-        animator.SetFloat("Direction", direction);
-        //if (usingForces)
-        //{
-        //    Move(movement);
-        //}
-        //else
-        //{
-        //    transform.Translate(movement);
-        //}
-        
-        transform.Translate(movement);
-        /*FindDirections();
-        horizontal = Input.GetAxisRaw("Horizontal");
-        if (horizontal != 0){
-            rb.velocity = movementDir * horizontal;
-        }*/
 
 
         // Jump checks
@@ -211,40 +150,22 @@ public class CharacterMovement : MonoBehaviour
             jumping = false;
         }
 
-        if (Vector3.Angle(transform.up, rb.velocity) > 95.0f && rb.mass == 1f)
-        {
-            Fall();
-        }
-
         if (Input.GetButtonDown("ButtonB"))
         {
             if (!debugInvincible)
             {
                 debugInvincible = true;
+                rb.velocity = Vector3.zero;
                 //rb.useGravity = false;
-                rb.detectCollisions = false;
+                //rb.detectCollisions = false;
             }
             else
             {
                 debugInvincible = false;
                 //rb.useGravity = true;
-                rb.detectCollisions = true;
+                //rb.detectCollisions = true;
             }
         }
-
-        //if (Input.GetButtonDown("Start"))
-        //{
-        //    if (joystickMovement)
-        //    {
-        //        joystickMovement = false;
-        //    }
-        //    else
-        //    {
-        //        joystickMovement = true;
-        //    }
-        //}
-
-
     }
 
     private void FixedUpdate()
@@ -260,17 +181,28 @@ public class CharacterMovement : MonoBehaviour
                 rb.AddForce(-1f * transform.up * fallingSpeed, ForceMode.VelocityChange);
             }
         }
-        if (horizontal < .01 && horizontal > -.01 && stop)
+        if (horizontal < .01 && horizontal > -.01)
         {
-
+            /*
+            if (stop)
+            {
+                Vector3 curXVelocity = Vector3.Cross(rb.velocity, transform.up);
+                rb.velocity = Vector3.zero;
+                stop = false;
+            }
+            */
         }
-        else
+        else if(!debugInvincible)
         {
             if (Vector3.Cross(rb.velocity, transform.up).magnitude < maxSpeed)
             {
                 rb.AddForce(transform.right * horizontal * speed, ForceMode.Force);
                 stop = true;
             }
+        }
+        if (Vector3.Angle(transform.up, rb.velocity) > 95.0f && rb.mass == 1f)
+        {
+            Fall();
         }
         if (callJump)
         {
@@ -282,35 +214,6 @@ public class CharacterMovement : MonoBehaviour
             ContinueJump();
             callContinueJump = false;
         }
-
-        //Debug.DrawRay(transform.position, Vector3.Cross(rb.velocity, transform.up),Color.red);
-        Debug.DrawRay(transform.position, Vector3.Cross(rb.velocity, transform.right),Color.red);
-
-        //rb.velocity = rb.velocity.normalized * Mathf.Min(maxSpeed, rb.velocity.magnitude);
-
-        //rb.MovePosition(rb.position + (transform.right * currentSpeed) * Time.fixedDeltaTime);
-        //rb.AddForce(transform.right * currentSpeed / forceMult, ForceMode.Impulse);
-        //Vector3 localVel = transform.InverseTransformDirection(rb.velocity);
-        //if (localVel.x > maxSpeed)
-        //{
-        //    localVel.x = maxSpeed;
-        //}
-        //if (localVel.x < -1 * maxSpeed)
-        //{
-        //    localVel.x = -1 * maxSpeed;
-        //}
-        //if (localVel.y < -1 * maxSpeed)
-        //{
-        //    localVel.y = -1 * maxSpeed;
-        //}
-        //rb.AddForce(movement / forceMult, ForceMode.VelocityChange);
-
-        //if (!grounded || grounded)
-        //{
-        //    Vector3 newX = rb.velocity;
-        //    newX.x = 0f;
-        //    rb.velocity = newX;
-        //}
     }
 
     //void Move(Vector3 move)
