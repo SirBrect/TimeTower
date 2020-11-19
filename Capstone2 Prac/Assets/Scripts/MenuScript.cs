@@ -20,6 +20,7 @@ public class MenuScript : MonoBehaviour
     bool isSubmenu;
     public bool canHold = true;
     public bool closable = true;
+    public CharacterMovement player;
     //public MenuSounds ms;
     // Start is called before the first frame update
     void Start()
@@ -35,9 +36,13 @@ public class MenuScript : MonoBehaviour
     void Update()
     {
 
+        if (Input.GetButtonDown("Start"))
+        {
+            Unpause();
+        }
         if (vertical)
         {
-            if (Input.GetAxis("Vertical") < -0.5f)
+            if ((Input.GetAxis("Vertical") < -0.5f) || (Input.GetAxis("VerticalAlt") < -0.5f))
             {
                 if (canScroll)
                 {
@@ -53,7 +58,7 @@ public class MenuScript : MonoBehaviour
                     }
                 }
             }
-            else if (Input.GetAxis("Vertical") > 0.5f)
+            else if ((Input.GetAxis("Vertical") > 0.5f) || (Input.GetAxis("VerticalAlt") > 0.5f))
             {
                 if (canScroll)
                 {
@@ -81,7 +86,7 @@ public class MenuScript : MonoBehaviour
         }
         else
         {
-            if (Input.GetAxis("Horizontal") < -0.5f)
+            if ((Input.GetAxis("Horizontal") < -0.5f) || (Input.GetAxis("HorizontalAlt") < -0.5f))
             {
                 if (canScroll)
                 {
@@ -97,8 +102,8 @@ public class MenuScript : MonoBehaviour
                     }
                 }
             }
-            else if (Input.GetAxis("Horizontal") > 0.5f)
-            {
+            else if ((Input.GetAxis("Horizontal") > 0.5f) || (Input.GetAxis("HorizontalAlt") > 0.5f))
+                {
                 if (canScroll)
                 {
                     //ms.PlayNext();
@@ -170,6 +175,11 @@ public class MenuScript : MonoBehaviour
         {
             previousMenu.SetActive(true);
         }
+        else
+        {
+            // Unpause
+            Unpause();
+        }
         gameObject.SetActive(false);
     }
 
@@ -189,7 +199,7 @@ public class MenuScript : MonoBehaviour
             index = 0;
         }
         selectedButton = buttons[index];
-        cursorPos.localPosition = new Vector3(136f, selectedButton.GetComponent<RectTransform>().localPosition.y, cursorPos.localPosition.z);
+        cursorPos.localPosition = new Vector3(225f, selectedButton.GetComponent<RectTransform>().localPosition.y, cursorPos.localPosition.z);
         selectedButton.GetComponentInChildren<Text>().color = Color.red;
     }
 
@@ -202,7 +212,7 @@ public class MenuScript : MonoBehaviour
             index = buttons.Count - 1;
         }
         selectedButton = buttons[index];
-        cursorPos.localPosition = new Vector3(136f, selectedButton.GetComponent<RectTransform>().localPosition.y, cursorPos.localPosition.z);
+        cursorPos.localPosition = new Vector3(225f, selectedButton.GetComponent<RectTransform>().localPosition.y, cursorPos.localPosition.z);
         selectedButton.GetComponentInChildren<Text>().color = Color.red;
     }
 
@@ -232,5 +242,11 @@ public class MenuScript : MonoBehaviour
         cursorPos.localPosition = new Vector3(selectedButton.GetComponent<RectTransform>().localPosition.x + 95f, cursorPos.localPosition.y, cursorPos.localPosition.z);
         selectedButton.GetComponentInChildren<Text>().color = Color.red;
         canScroll = false;
+    }
+
+    public void Unpause()
+    {
+        selectedButton.GetComponentInChildren<Text>().color = Color.white;
+        player.UnpauseGame();
     }
 }

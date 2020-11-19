@@ -63,6 +63,8 @@ public class CharacterMovement : MonoBehaviour
 
     bool staminaUsed = false;
 
+    public GameObject pauseMenu;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -75,6 +77,7 @@ public class CharacterMovement : MonoBehaviour
         fadeOut.SetActive(false);
         rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
         maxSpeed = maxGroundSpeed;
+        pauseMenu.SetActive(false);
         //memory.SetRespawn(Respawn);
         //right = Quaternion.Euler(model.transform.forward);
         //left = Quaternion.Euler(-1*model.transform.forward);
@@ -87,6 +90,10 @@ public class CharacterMovement : MonoBehaviour
         if (dead)
         {
             return;
+        }
+        if (Input.GetButtonDown("Start"))
+        {
+            PauseGame();
         }
         if (grounded)
         {
@@ -281,6 +288,20 @@ public class CharacterMovement : MonoBehaviour
         {
             gameObject.transform.parent = null;
         }
+    }
+
+    void PauseGame()
+    {
+        dead = true;
+        pauseMenu.SetActive(true);
+        Time.timeScale = 0.0f;
+    }
+
+    public void UnpauseGame()
+    {
+        dead = false;
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1.0f;
     }
 
     public void Ground()
