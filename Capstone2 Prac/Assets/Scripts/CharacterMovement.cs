@@ -57,6 +57,12 @@ public class CharacterMovement : MonoBehaviour
 
     public bool stop = false;
 
+    float timer = 0.0f;
+
+    float startTime = 0.0f;
+
+    bool staminaUsed = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -181,7 +187,37 @@ public class CharacterMovement : MonoBehaviour
                 rb.AddForce(-1f * transform.up * fallingSpeed, ForceMode.VelocityChange);
             }
         }
-        if (horizontal < .01 && horizontal > -.01)
+        if (grounded && timer > 0.0f){
+            Debug.Log(timer);
+            timer -= .25f;
+            if (timer < 0.0f){
+                timer = 0.0f;
+            }
+            staminaUsed = false;
+        }
+
+        debugInvincible = false;
+        if (!grounded && Input.GetButton("SquareX") && !staminaUsed){
+            rb.velocity = Vector3.zero;
+            debugInvincible = true;
+            Debug.Log(timer);
+            if (stop == true){
+                stop = false;
+                timer += .25f;
+                startTime = Time.deltaTime - timer;
+                //timer -= 10;
+                //startTime = Time.deltaTime;
+            }
+            else{
+                rb.velocity = Vector3.zero;
+                timer += .1f;
+                if (Time.deltaTime - startTime >= 3.0f || timer >= 3.0f){
+                    staminaUsed = true;
+                }
+            }
+        }
+
+        /*if (horizontal < .01 && horizontal > -.01)
         {
             /*
             if (stop)
@@ -190,8 +226,8 @@ public class CharacterMovement : MonoBehaviour
                 rb.velocity = Vector3.zero;
                 stop = false;
             }
-            */
-        }
+            
+        }*/
         else if(!debugInvincible)
         {
             if (Vector3.Cross(rb.velocity, transform.up).magnitude < maxSpeed)
@@ -227,6 +263,7 @@ public class CharacterMovement : MonoBehaviour
         currentJumpTime = 0f;
         Debug.Log("Here!");
         jumping = true;
+        stop = true;
     }
 
     void ContinueJump()
