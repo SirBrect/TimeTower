@@ -170,6 +170,7 @@ public class CharacterMovement : MonoBehaviour
             if (!debugInvincible)
             {
                 debugInvincible = true;
+                animator.SetBool("Float", true);
                 rb.velocity = Vector3.zero;
                 //rb.useGravity = false;
                 //rb.detectCollisions = false;
@@ -177,6 +178,7 @@ public class CharacterMovement : MonoBehaviour
             else
             {
                 debugInvincible = false;
+                animator.SetBool("Float", false);
                 //rb.useGravity = true;
                 //rb.detectCollisions = true;
             }
@@ -206,9 +208,11 @@ public class CharacterMovement : MonoBehaviour
         }
 
         debugInvincible = false;
+        animator.SetBool("Float", false);
         if (!grounded && Input.GetButton("SquareX") && !staminaUsed){
             rb.velocity = Vector3.zero;
             debugInvincible = true;
+            animator.SetBool("Float", true);
             Debug.Log(timer);
             if (stop == true){
                 stop = false;
