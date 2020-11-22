@@ -22,6 +22,10 @@ public class RotatePlatform : MonoBehaviour
         {
             return;
         }
+        if(player.isDead() && Time.timeScale < 0.1f)
+        {
+            return;
+        }
         // X rotation
         if (axis == 0)
         {

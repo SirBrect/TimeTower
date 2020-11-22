@@ -65,6 +65,8 @@ public class CharacterMovement : MonoBehaviour
 
     public GameObject pauseMenu;
 
+    //bool paused = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -293,13 +295,20 @@ public class CharacterMovement : MonoBehaviour
     void PauseGame()
     {
         dead = true;
+        changeGrav.dead = true;
         pauseMenu.SetActive(true);
         Time.timeScale = 0.0f;
+    }
+
+    public bool isDead()
+    {
+        return dead;
     }
 
     public void UnpauseGame()
     {
         dead = false;
+        changeGrav.dead = false;
         pauseMenu.SetActive(false);
         Time.timeScale = 1.0f;
     }

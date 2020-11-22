@@ -15,6 +15,8 @@ public class ChangeGravity : MonoBehaviour
     public float gravityAxisValSlow;
 
     public bool triggers = true;
+
+    int invert = 1;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,11 +35,11 @@ public class ChangeGravity : MonoBehaviour
         //    }
         //}
         if (triggers){
-            gravityAxisVal = Input.GetAxis("Gravity");
-            gravityAxisValSlow = Input.GetAxis("GravitySlow");
+            gravityAxisVal = Input.GetAxis("Gravity") * invert;
+            gravityAxisValSlow = Input.GetAxis("GravitySlow") * invert;
             if(Mathf.Abs(gravityAxisVal) >= Mathf.Abs(gravityAxisValSlow))
             {
-                if (gravityAxisVal > 0.01f || gravityAxisVal < -0.01f)
+                if (!dead && (gravityAxisVal > 0.01f || gravityAxisVal < -0.01f))
                 {
                     Debug.Log(gravityAxisVal);
                     transform.Rotate(0, 0, gravityAxisVal);
@@ -45,7 +47,7 @@ public class ChangeGravity : MonoBehaviour
             }
             else
             {
-                if (gravityAxisValSlow > 0.01f || gravityAxisValSlow < -0.01f)
+                if (!dead && (gravityAxisValSlow > 0.01f || gravityAxisValSlow < -0.01f))
                 {
                     Debug.Log(gravityAxisValSlow);
                     transform.Rotate(0, 0, gravityAxisValSlow/2.0f);
@@ -53,8 +55,8 @@ public class ChangeGravity : MonoBehaviour
             }
         }
         else{
-            gravityAxisVal = Input.GetAxis("GravAlt");
-            if (gravityAxisVal > 0.01f || gravityAxisVal < -0.01f)
+            gravityAxisVal = Input.GetAxis("GravAlt") * invert;
+            if (!dead && (gravityAxisVal > 0.01f || gravityAxisVal < -0.01f))
             {
                 Debug.Log(gravityAxisVal);
                 transform.Rotate(0, 0, gravityAxisVal);
@@ -95,4 +97,8 @@ public class ChangeGravity : MonoBehaviour
         //Debug.DrawRay(transform.position, Physics.gravity,Color.blue);
     }
 
+    public void Invert()
+    {
+        invert *= -1;
+    }
 }
