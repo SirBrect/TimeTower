@@ -23,7 +23,7 @@ public class TitleMenu : MonoBehaviour
     }
 
     public void StartGame(){
-        SceneManager.LoadScene("Intro", LoadSceneMode.Single);
+        SceneManager.LoadScene("Backstory", LoadSceneMode.Single);
     }
 
     public void QuitGame(){
