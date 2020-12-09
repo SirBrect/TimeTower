@@ -21,6 +21,11 @@ public class MenuScript : MonoBehaviour
     public bool canHold = true;
     public bool closable = true;
     public CharacterMovement player;
+
+    //The image of the controls and bool needed
+    public GameObject controls;
+    bool shown = false;
+
     //public MenuSounds ms;
     // Start is called before the first frame update
     void Start()
@@ -248,5 +253,16 @@ public class MenuScript : MonoBehaviour
     {
         selectedButton.GetComponentInChildren<Text>().color = Color.white;
         player.UnpauseGame();
+    }
+
+    public void ControlsButton(){
+        if (shown == true){
+            controls.SetActive(false);
+            shown = false;
+        }
+        else{
+            controls.SetActive(true);
+            shown = true;
+        }
     }
 }

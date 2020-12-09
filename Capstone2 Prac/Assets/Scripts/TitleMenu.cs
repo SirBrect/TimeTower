@@ -10,6 +10,10 @@ public class TitleMenu : MonoBehaviour
     public Button quitButton;
     public Button startButton;
     public Button options;
+
+    public GameObject controls;
+
+    bool shown = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -30,7 +34,21 @@ public class TitleMenu : MonoBehaviour
         Application.Quit();
     }
 
-    public void ShowOptions(){
-        
+    public void ControlsButton(){
+        if (shown == true){
+            HideControls();
+        }
+        else{
+            ShowControls();
+        }
+    }
+
+    public void ShowControls(){
+        controls.SetActive(true);
+        shown = true;
+    }
+    public void HideControls(){
+        controls.SetActive(false);
+        shown = false;
     }
 }
